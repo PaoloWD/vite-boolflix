@@ -3,6 +3,7 @@ import axios from "axios";
 export const store = reactive({
   filmsList: [],
   serieList: [],
+  selectedFilm: null,
   castList: [],
   typeList: [],
   isHidden: false,
@@ -43,31 +44,26 @@ export function fetchSerie() {
     });
 }
 
-export function fetchCast() {
+export function fetchCast(id) {
   axios
-    .get(`https://api.themoviedb.org/3/movie/550/credits`, {
+    .get(`https://api.themoviedb.org/3/movie/${id}/credits`, {
       params: {
         api_key: "f5d594055ab100c5ed443f60a610762f",
-        //movie_id: store.idFilm,
       },
     })
     .then((resp) => {
-      store.castList = resp.data.cast;
-      console.log(resp);
+      store.castList.push({ castListAxi: resp.data.cast });
     });
 }
 
-export function fetchType() {
+export function fetchType(id) {
   axios
-    .get(`https://api.themoviedb.org/3/movie/550`, {
+    .get(`https://api.themoviedb.org/3/movie/${id}`, {
       params: {
         api_key: "f5d594055ab100c5ed443f60a610762f",
-        //movie_id: store.idFilm,
-        //domandona
       },
     })
     .then((resp) => {
       store.typeList = resp.data.genres;
-      console.log(resp);
     });
 }

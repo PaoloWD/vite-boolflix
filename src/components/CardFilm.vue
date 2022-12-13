@@ -22,9 +22,12 @@
 
         <div v-if="store.isHidden === false">
           <div>Cast:</div>
-          <span v-for="cast in store.castList.slice(0, 5)">
+          <!-- <span
+            v-for="cast in store.selectedFilm.cast[0][0].castList.splice(0, 5)"
+          >
             <CastInfo :actor="cast"></CastInfo>
-          </span>
+          </span> -->
+
           <div>Tipo:</div>
 
           <span v-for="typeFilm in store.typeList">{{
@@ -61,10 +64,10 @@ export default {
       return toReturn;
     },
     test() {
-      fetchCast();
-      fetchType();
-      console.log();
       this.store.idFilm = this.singleCard.id;
+      fetchCast(store.idFilm);
+      fetchType(store.idFilm);
+      this.ab();
       this.toggle();
     },
     toggle() {
@@ -74,6 +77,18 @@ export default {
       } else {
         this.store.isHidden = true;
       }
+    },
+    ab() {
+      this.store.selectedFilm["cast"] = [
+        this.store.castList[this.store.castList.length - 1].castListAxi.splice(
+          0,
+          5
+        ),
+      ];
+
+      //console.log(this.store.castList[0].castList.splice(0, 5));
+
+      //console.log(this.store.selectedFilm.cast[0][0].castList.splice(0, 5));
     },
   },
   components: { CastInfo },

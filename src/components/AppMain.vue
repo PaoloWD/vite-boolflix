@@ -3,7 +3,11 @@
     <div class="container">
       <h2 class="text-white py-5" v-if="store.isHidden">Films</h2>
       <div class="row g-5">
-        <div class="col-lg-3 col-md-4 col-sm-6" v-for="card in store.filmsList">
+        <div
+          @mouseenter="store.selectedFilm = card"
+          class="col-lg-3 col-md-4 col-sm-6"
+          v-for="card in store.filmsList"
+        >
           <CardFilm :singleCard="card"></CardFilm>
         </div>
       </div>
