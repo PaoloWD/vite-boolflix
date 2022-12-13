@@ -1,5 +1,5 @@
 <template>
-  <div @click="test">
+  <div @click="test" @mouseleave="toggle">
     <div class="card overflow-auto" style="width: 18rem">
       <div class="overlay"></div>
       <div v-if="singleCard.poster_path" class="overflow-hidden">
@@ -65,6 +65,10 @@ export default {
       fetchType();
       console.log();
       this.store.idFilm = this.singleCard.id;
+      this.toggle();
+    },
+    toggle() {
+      //domanda
       if (this.store.isHidden === true) {
         this.store.isHidden = false;
       } else {

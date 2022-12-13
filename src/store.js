@@ -63,6 +63,7 @@ export function fetchType() {
       params: {
         api_key: "f5d594055ab100c5ed443f60a610762f",
         //movie_id: store.idFilm,
+        //domandona
       },
     })
     .then((resp) => {
