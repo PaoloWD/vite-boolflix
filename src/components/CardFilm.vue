@@ -55,7 +55,6 @@ export default {
       let toReturn = [];
       let voto = number;
       voto = voto / 2;
-      //toReturn = Math.ceil(voto);
       for (let i = 0; i < Math.ceil(voto); i++) {
         toReturn.push("*");
       }

@@ -9,11 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@growthbunker/vueflags": "^0.1.14",
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
+    "flag-icons": "^6.6.6",
     "fontawesome": "^5.6.3",
     "sass": "^1.56.2",
-    "vue": "^3.2.45"
+    "vue": "^3.2.45",
+    "vue-flag-icon": "^2.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

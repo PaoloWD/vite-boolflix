@@ -10,7 +10,7 @@ export const store = reactive({
     titolo: "",
   },
 
-  idFilm: null,
+  idFilm: undefined,
 
   img: {
     link: "https://image.tmdb.org/t/p/",
