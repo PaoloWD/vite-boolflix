@@ -5,6 +5,7 @@
       <div class="row g-5">
         <div
           @mouseenter="store.selectedFilm = card"
+          @mouseleave="store.isHidden = true"
           class="col-lg-3 col-md-4 col-sm-6"
           v-for="card in store.filmsList"
         >
