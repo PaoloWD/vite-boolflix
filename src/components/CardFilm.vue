@@ -26,7 +26,9 @@
           </span>
           <div>Tipo:</div>
 
-          <span v-for="typeFilm in store.typeList">{{ typeFilm.name }}</span>
+          <span v-for="typeFilm in store.typeList">{{
+            `${typeFilm.name},  `
+          }}</span>
         </div>
       </div>
     </div>
