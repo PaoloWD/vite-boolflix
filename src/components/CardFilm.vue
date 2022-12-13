@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="test">
     <div class="card overflow-auto" style="width: 18rem">
       <div class="overlay"></div>
       <div v-if="singleCard.poster_path" class="overflow-hidden">
@@ -18,12 +18,23 @@
         <p>Lingua originale {{ singleCard.original_language }}</p>
         <p>Voto {{ math(singleCard.vote_average) }}</p>
         <p>Descrizione: {{ singleCard.overview }}</p>
+
+        <div v-if="store.isHidden === false">
+          <div>Cast:</div>
+          <span v-for="cast in store.castList.slice(0, 5)">
+            <CastInfo :actor="cast"></CastInfo>
+          </span>
+          <div>Tipo:</div>
+
+          <span v-for="typeFilm in store.typeList">{{ typeFilm.name }}</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { store } from "../store";
+import { store, fetchCast, fetchType } from "../store";
+import CastInfo from "./CastInfo.vue";
 export default {
   name: "CardFilm",
   props: {
@@ -45,10 +56,21 @@ export default {
       for (let i = 0; i < Math.ceil(voto); i++) {
         toReturn.push("*");
       }
-
       return toReturn;
     },
+    test() {
+      fetchCast();
+      fetchType();
+      console.log();
+      this.store.idFilm = this.singleCard.id;
+      if (this.store.isHidden === true) {
+        this.store.isHidden = false;
+      } else {
+        this.store.isHidden = true;
+      }
+    },
   },
+  components: { CastInfo },
 };
 </script>
 <style scoped lang="scss">

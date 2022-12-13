@@ -28,6 +28,7 @@ export default {
       store,
     };
   },
+  methods: {},
 
   components: { CardFilm, CardSerie },
 };
