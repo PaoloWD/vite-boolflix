@@ -1,5 +1,6 @@
 <template>
-  <div @click="test" @mouseleave="toggle">
+  <div @click="test">
+    <div></div>
     <div class="card overflow-auto" style="width: 18rem">
       <div class="overlay"></div>
       <div v-if="singleCard.poster_path" class="overflow-hidden">
