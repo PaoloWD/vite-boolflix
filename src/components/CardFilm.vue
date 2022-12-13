@@ -1,5 +1,5 @@
 <template>
-  <div @click="test">
+  <div @click="getActors(), toggle()">
     <div></div>
     <div class="card overflow-auto" style="width: 18rem">
       <div class="overlay"></div>
@@ -17,15 +17,14 @@
         <p>Titolo:{{ singleCard.title }}</p>
         <p>Titolo originale: {{ singleCard.original_title }}</p>
         <p>Lingua originale {{ singleCard.original_language }}</p>
-        <p>Voto {{ math(singleCard.vote_average) }}</p>
+        <p>
+          Voto:
+          <span v-for="stars in math()"> {{ stars }}</span>
+        </p>
         <p>Descrizione: {{ singleCard.overview }}</p>
 
         <div v-if="store.isHidden === false">
-          <div>Cast:</div>
-          <span v-for="cast in store.selectedFilm.cast[0]">
-            <CastInfo :actor="cast"></CastInfo>
-          </span>
-
+          <p v-for="(actors, i) in getActors()">{{ actors }}</p>
           <div>Tipo:</div>
 
           <span v-for="typeFilm in store.typeList">{{
@@ -37,7 +36,7 @@
   </div>
 </template>
 <script>
-import { store, fetchCast, fetchType } from "../store";
+import { store } from "../store";
 import CastInfo from "./CastInfo.vue";
 export default {
   name: "CardFilm",
@@ -52,41 +51,32 @@ export default {
     };
   },
   methods: {
-    math(number) {
+    math() {
       let toReturn = [];
-      let voto = number;
+      let voto = this.singleCard.vote_average;
       voto = voto / 2;
       for (let i = 0; i < Math.ceil(voto); i++) {
         toReturn.push("*");
       }
       return toReturn;
     },
-    test() {
-      this.store.idFilm = this.singleCard.id;
-      fetchCast(store.idFilm);
-      fetchType(store.idFilm);
-      this.ab();
-      this.toggle();
-    },
+
     toggle() {
-      //domanda
       if (this.store.isHidden === true) {
         this.store.isHidden = false;
       } else {
         this.store.isHidden = true;
       }
     },
-    ab() {
-      this.store.selectedFilm["cast"] = [
-        this.store.castList[this.store.castList.length - 1].castListAxi.splice(
-          0,
-          5
-        ),
-      ];
 
-      //console.log(this.store.castList[0].castList.splice(0, 5));
-
-      //console.log(this.store.selectedFilm.cast[0][0].castList.splice(0, 5));
+    getActors() {
+      let toReturn = [];
+      let j = 1;
+      for (let i = 0; i < 5; i++) {
+        toReturn.push(this.store.filmsList[j].cast[j][i].name);
+        console.log(toReturn);
+      }
+      return toReturn;
     },
   },
   components: { CastInfo },

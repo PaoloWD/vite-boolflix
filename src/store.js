@@ -28,6 +28,14 @@ export function fetchFilm() {
     })
     .then((resp) => {
       store.filmsList = resp.data.results;
+      store.filmsList.forEach((element) => {
+        fetchCast(element.id);
+        element["cast"] = store.castList;
+        // console.log("castList", store.castList);
+        //console.log("filmList", store.filmsList);
+        //console.log("id", element.id);
+        console.log("Cast", element.cast);
+      });
     });
 }
 
@@ -52,7 +60,9 @@ export function fetchCast(id) {
       },
     })
     .then((resp) => {
-      store.castList.push({ castListAxi: resp.data.cast });
+      store.castList.push(resp.data.cast);
+      console.log("resp", resp.data.cast);
+      //console.log("fetchCast no 0", store.filmsList);
     });
 }
 

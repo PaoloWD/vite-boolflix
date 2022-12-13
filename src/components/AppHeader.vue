@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import { store, fetchFilm, fetchSerie } from "../store";
+import { store } from "../store";
 export default {
   data() {
     return {
@@ -16,9 +16,8 @@ export default {
   },
   methods: {
     onSubmit() {
-      fetchFilm();
-      fetchSerie();
       store.isHidden = true;
+      this.$emit("search");
       //chiedere
     },
   },

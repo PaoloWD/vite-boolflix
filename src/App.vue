@@ -1,13 +1,13 @@
 <template>
   <div class="bg-main">
-    <AppHeader></AppHeader>
+    <AppHeader @search="onSearch"></AppHeader>
     <div class="container main-container">
       <AppMain></AppMain>
     </div>
   </div>
 </template>
 <script>
-import { store } from "../src/store";
+import { fetchFilm, fetchSerie, store } from "../src/store";
 import AppHeader from "./components/AppHeader.vue";
 import AppMain from "./components/AppMain.vue";
 export default {
@@ -15,6 +15,12 @@ export default {
     return {
       store,
     };
+  },
+  methods: {
+    onSearch() {
+      fetchFilm();
+      fetchSerie();
+    },
   },
   components: { AppHeader, AppMain },
 };
