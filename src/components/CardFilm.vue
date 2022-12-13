@@ -44,6 +44,9 @@ export default {
     singleCard: {
       type: Object,
     },
+    index: {
+      type: Number,
+    },
   },
   data() {
     return {
@@ -71,9 +74,10 @@ export default {
 
     getActors() {
       let toReturn = [];
-      let j = 1;
       for (let i = 0; i < 5; i++) {
-        toReturn.push(this.store.filmsList[j].cast[j][i].name);
+        toReturn.push(
+          this.store.filmsList[this.index].cast[this.index][i].name
+        );
         console.log(toReturn);
       }
       return toReturn;

@@ -4,17 +4,19 @@
       <h2 class="text-white py-5" v-if="store.isHidden">Films</h2>
       <div class="row g-5">
         <div
-          @mouseenter="store.selectedFilm = card"
           @mouseleave="store.isHidden = true"
           class="col-lg-3 col-md-4 col-sm-6"
-          v-for="card in store.filmsList"
+          v-for="(card, i) in store.filmsList"
         >
-          <CardFilm :singleCard="card"></CardFilm>
+          <CardFilm :singleCard="card" :index="i"></CardFilm>
         </div>
       </div>
       <h2 class="text-white py-5" v-if="store.isHidden">Serie Tv</h2>
       <div class="row g-5">
-        <div class="col-lg-3 col-md-4 col-sm-6" v-for="card in store.serieList">
+        <div
+          class="col-lg-3 col-md-4 col-sm-6"
+          v-for="(card, i) in store.serieList"
+        >
           <CardSerie :singleCard="card"></CardSerie>
         </div>
       </div>

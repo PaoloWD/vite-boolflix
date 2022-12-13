@@ -3,7 +3,6 @@ import axios from "axios";
 export const store = reactive({
   filmsList: [],
   serieList: [],
-  selectedFilm: null,
   castList: [],
   typeList: [],
   isHidden: false,
