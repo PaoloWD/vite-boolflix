@@ -22,11 +22,9 @@
 
         <div v-if="store.isHidden === false">
           <div>Cast:</div>
-          <!-- <span
-            v-for="cast in store.selectedFilm.cast[0][0].castList.splice(0, 5)"
-          >
+          <span v-for="cast in store.selectedFilm.cast[0]">
             <CastInfo :actor="cast"></CastInfo>
-          </span> -->
+          </span>
 
           <div>Tipo:</div>
 
