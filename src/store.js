@@ -3,7 +3,9 @@ import axios from "axios";
 export const store = reactive({
   filmsList: [],
   serieList: [],
-
+  castListTemp: [],
+  allGeneriList: [],
+  generiInput: "",
   isHidden: false,
   search: {
     titolo: "",
@@ -24,6 +26,16 @@ export function fetchFilm() {
     })
     .then((resp) => {
       store.filmsList = resp.data.results;
+    });
+  axios
+    .get("https://api.themoviedb.org/3/genre/movie/list", {
+      params: {
+        api_key: "f5d594055ab100c5ed443f60a610762f",
+      },
+    })
+    .then((resp) => {
+      store.allGeneriList = resp.data.genres;
+      console.log("tutti i generi", store.allGeneriList);
     });
 }
 
@@ -48,9 +60,19 @@ export function fetchCast(id, movie) {
       },
     })
     .then((resp) => {
-      movie.cast = resp.data.cast;
-      console.log("resp", resp.data.cast);
-      //console.log("fetchCast no 0", store.filmsList);
+      if (store.castListTemp.length === 0) {
+        for (let i = 0; i < 5; i++) {
+          if (resp.data.cast[i]) {
+            store.castListTemp.push(resp.data.cast[i]);
+          } else {
+            return;
+          }
+          movie.cast = store.castListTemp;
+          console.log("movie cast", movie.cast);
+        }
+      }
+
+      console.log(resp.data.cast.length);
     });
 }
 

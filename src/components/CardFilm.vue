@@ -1,5 +1,5 @@
 <template>
-  <div @click="getInfoFilm">
+  <div @click="getInfoFilm" @mouseleave="deleteArray()">
     <div></div>
     <div class="card overflow-auto" style="width: 18rem">
       <div class="overlay"></div>
@@ -24,7 +24,7 @@
         <p>Descrizione: {{ singleCard.overview }}</p>
 
         <div v-if="singleCard.cast">
-          <p v-for="i in 5">{{ singleCard.cast[i - 1].name ?? "" }}</p>
+          <p v-for="cast in singleCard.cast">{{ cast.name }}</p>
           <p v-for="(typeInfo, i) in singleCard.typeList">
             {{ `Genere ${i + 1}: ` + typeInfo.name }}
           </p>
@@ -73,6 +73,11 @@ export default {
       fetchCast(this.singleCard.id, this.singleCard);
       fetchType(this.singleCard.id, this.singleCard);
       this.toggle();
+    },
+
+    deleteArray() {
+      store.castListTemp = [];
+      console.log("array empty", store.castListTemp);
     },
   },
 
