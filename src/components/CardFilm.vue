@@ -19,7 +19,7 @@
         <p>Lingua originale <img :src="flag" alt="" /></p>
         <p>
           Voto:
-          <i class="fa-regular fa-star" v-for="i in math()"></i>
+          <i class="fa-solid text-warning fa-star" v-for="i in math()"></i>
         </p>
         <p>Descrizione: {{ singleCard.overview }}</p>
 
