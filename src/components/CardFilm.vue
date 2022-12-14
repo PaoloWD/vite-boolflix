@@ -16,7 +16,7 @@
       <div class="card-body pos-abs h-100 text-white overflow-auto">
         <p>Titolo:{{ singleCard.title }}</p>
         <p>Titolo originale: {{ singleCard.original_title }}</p>
-        <p>Lingua originale {{ singleCard.original_language }}</p>
+        <p>Lingua originale <img :src="flag" alt="" /></p>
         <p>
           Voto:
           <span v-for="stars in math()"> {{ stars }}</span>
@@ -24,7 +24,7 @@
         <p>Descrizione: {{ singleCard.overview }}</p>
 
         <div v-if="singleCard.cast">
-          <p v-for="i in 5">{{ singleCard.cast[i - 1].name }}</p>
+          <p v-for="i in 5">{{ singleCard.cast[i - 1].name ?? "" }}</p>
           <p v-for="(typeInfo, i) in singleCard.typeList">
             {{ `Genere ${i + 1}: ` + typeInfo.name }}
           </p>
@@ -46,6 +46,11 @@ export default {
   data() {
     return {
       store,
+      flagItems: {
+        linkFlag: "https://flagcdn.com/",
+        sizeFlag: "20x15/",
+        png: ".png",
+      },
     };
   },
   methods: {
@@ -71,6 +76,26 @@ export default {
       fetchCast(this.singleCard.id, this.singleCard);
       fetchType(this.singleCard.id, this.singleCard);
       this.toggle();
+    },
+  },
+
+  computed: {
+    flag() {
+      if (this.singleCard.original_language === "en") {
+        this.singleCard.original_language = "gb";
+        return `${this.flagItems.linkFlag}${this.flagItems.sizeFlag}${this.singleCard.original_language}${this.flagItems.png}`;
+      } else if (this.singleCard.original_language === "ko") {
+        this.singleCard.original_language = "xk";
+        return `${this.flagItems.linkFlag}${this.flagItems.sizeFlag}${this.singleCard.original_language}${this.flagItems.png}`;
+      } else if (this.singleCard.original_language === "da") {
+        this.singleCard.original_language = "dk";
+        return `${this.flagItems.linkFlag}${this.flagItems.sizeFlag}${this.singleCard.original_language}${this.flagItems.png}`;
+      } else if (this.singleCard.original_language === "ja") {
+        this.singleCard.original_language = "jp";
+        return `${this.flagItems.linkFlag}${this.flagItems.sizeFlag}${this.singleCard.original_language}${this.flagItems.png}`;
+      } else {
+        return `${this.flagItems.linkFlag}${this.flagItems.sizeFlag}${this.singleCard.original_language}${this.flagItems.png}`;
+      }
     },
   },
   components: { CastInfo },
