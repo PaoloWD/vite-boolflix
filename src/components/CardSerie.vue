@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div @click="getInfoFilm" @mouseleave="deleteArray()">
+    <div></div>
     <div class="card overflow-auto" style="width: 18rem">
       <div class="overlay"></div>
       <div v-if="singleCard.poster_path" class="overflow-hidden">
@@ -15,17 +16,28 @@
       <div class="card-body pos-abs h-100 text-white overflow-auto">
         <p>Titolo:{{ singleCard.title }}</p>
         <p>Titolo originale: {{ singleCard.original_title }}</p>
-        <p>Lingua originale {{ singleCard.original_language }}</p>
-        <p>Voto {{ math(singleCard.vote_average) }}</p>
+        <p>Lingua originale <img :src="flag" alt="" /></p>
+        <p>
+          Voto:
+          <i class="fa-solid text-warning fa-star" v-for="i in math()"></i>
+        </p>
         <p>Descrizione: {{ singleCard.overview }}</p>
+
+        <div v-if="singleCard.cast">
+          <p v-for="cast in singleCard.cast">{{ cast.name }}</p>
+          <p v-for="(typeInfo, i) in singleCard.typeList">
+            {{ `Genere ${i + 1}: ` + typeInfo.name }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { store } from "../store";
+import { fetchCast, fetchType, store } from "../store";
+import CastInfo from "./CastInfo.vue";
 export default {
-  name: "CardSerie",
+  name: "CardFilm",
   props: {
     singleCard: {
       type: Object,
@@ -34,21 +46,61 @@ export default {
   data() {
     return {
       store,
+      flagItems: {
+        linkFlag: "https://flagcdn.com/",
+        sizeFlag: "20x15/",
+        png: ".png",
+      },
     };
   },
   methods: {
-    math(number) {
-      let toReturn = [];
-      let voto = number;
-      voto = voto / 2;
-      //toReturn = Math.ceil(voto);
-      for (let i = 0; i < Math.ceil(voto); i++) {
-        toReturn.push("*");
-      }
+    math() {
+      let toReturn = this.singleCard.vote_average;
+      toReturn = toReturn / 2;
 
-      return toReturn;
+      return Math.ceil(toReturn);
+    },
+
+    toggle() {
+      if (this.store.isHidden === true) {
+        this.store.isHidden = false;
+      } else {
+        this.store.isHidden = true;
+      }
+    },
+
+    getInfoFilm() {
+      fetchCast(this.singleCard.id, this.singleCard);
+      fetchType(this.singleCard.id, this.singleCard);
+      this.toggle();
+    },
+
+    deleteArray() {
+      store.castListTemp = [];
+      console.log("array empty", store.castListTemp);
     },
   },
+
+  computed: {
+    flag() {
+      if (this.singleCard.original_language === "en") {
+        this.singleCard.original_language = "gb";
+        return `${this.flagItems.linkFlag}${this.flagItems.sizeFlag}${this.singleCard.original_language}${this.flagItems.png}`;
+      } else if (this.singleCard.original_language === "ko") {
+        this.singleCard.original_language = "xk";
+        return `${this.flagItems.linkFlag}${this.flagItems.sizeFlag}${this.singleCard.original_language}${this.flagItems.png}`;
+      } else if (this.singleCard.original_language === "da") {
+        this.singleCard.original_language = "dk";
+        return `${this.flagItems.linkFlag}${this.flagItems.sizeFlag}${this.singleCard.original_language}${this.flagItems.png}`;
+      } else if (this.singleCard.original_language === "ja") {
+        this.singleCard.original_language = "jp";
+        return `${this.flagItems.linkFlag}${this.flagItems.sizeFlag}${this.singleCard.original_language}${this.flagItems.png}`;
+      } else {
+        return `${this.flagItems.linkFlag}${this.flagItems.sizeFlag}${this.singleCard.original_language}${this.flagItems.png}`;
+      }
+    },
+  },
+  components: { CastInfo },
 };
 </script>
 <style scoped lang="scss">
