@@ -26,6 +26,7 @@ export default {
 };
 </script>
 <style lang="scss">
+@use "../src/styles/main.scss";
 .main-container {
   height: 100vh;
   overflow: auto;

@@ -19,7 +19,7 @@
         <p>Lingua originale <img :src="flag" alt="" /></p>
         <p>
           Voto:
-          <span v-for="stars in math()"> {{ stars }}</span>
+          <i class="fa-regular fa-star" v-for="i in math()"></i>
         </p>
         <p>Descrizione: {{ singleCard.overview }}</p>
 
@@ -55,13 +55,10 @@ export default {
   },
   methods: {
     math() {
-      let toReturn = [];
-      let voto = this.singleCard.vote_average;
-      voto = voto / 2;
-      for (let i = 0; i < Math.ceil(voto); i++) {
-        toReturn.push("*");
-      }
-      return toReturn;
+      let toReturn = this.singleCard.vote_average;
+      toReturn = toReturn / 2;
+
+      return Math.ceil(toReturn);
     },
 
     toggle() {

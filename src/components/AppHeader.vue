@@ -18,9 +18,12 @@ export default {
     onSubmit() {
       store.isHidden = true;
       this.$emit("search");
+      store.search = "";
       //chiedere
     },
   },
 };
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@use "../src/styles/main.scss";
+</style>
