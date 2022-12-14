@@ -10,8 +10,6 @@ export const store = reactive({
     titolo: "",
   },
 
-  idFilm: undefined,
-
   img: {
     link: "https://image.tmdb.org/t/p/",
     size: "w92",
@@ -27,14 +25,6 @@ export function fetchFilm() {
     })
     .then((resp) => {
       store.filmsList = resp.data.results;
-      store.filmsList.forEach((element) => {
-        fetchCast(element.id);
-        element["cast"] = store.castList;
-        // console.log("castList", store.castList);
-        //console.log("filmList", store.filmsList);
-        //console.log("id", element.id);
-        console.log("Cast", element.cast);
-      });
     });
 }
 
@@ -51,7 +41,7 @@ export function fetchSerie() {
     });
 }
 
-export function fetchCast(id) {
+export function fetchCast(id, movie) {
   axios
     .get(`https://api.themoviedb.org/3/movie/${id}/credits`, {
       params: {
@@ -59,13 +49,13 @@ export function fetchCast(id) {
       },
     })
     .then((resp) => {
-      store.castList.push(resp.data.cast);
+      movie.cast = resp.data.cast;
       console.log("resp", resp.data.cast);
       //console.log("fetchCast no 0", store.filmsList);
     });
 }
 
-export function fetchType(id) {
+export function fetchType(id, movie) {
   axios
     .get(`https://api.themoviedb.org/3/movie/${id}`, {
       params: {
@@ -73,6 +63,6 @@ export function fetchType(id) {
       },
     })
     .then((resp) => {
-      store.typeList = resp.data.genres;
+      movie.typeList = resp.data.genres;
     });
 }

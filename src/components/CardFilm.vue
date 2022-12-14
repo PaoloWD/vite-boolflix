@@ -1,5 +1,5 @@
 <template>
-  <div @click="getActors(), toggle()">
+  <div @click="getInfoFilm">
     <div></div>
     <div class="card overflow-auto" style="width: 18rem">
       <div class="overlay"></div>
@@ -23,29 +23,24 @@
         </p>
         <p>Descrizione: {{ singleCard.overview }}</p>
 
-        <div v-if="store.isHidden === false">
-          <p v-for="(actors, i) in getActors()">{{ actors }}</p>
-          <div>Tipo:</div>
-
-          <span v-for="typeFilm in store.typeList">{{
-            `${typeFilm.name},  `
-          }}</span>
+        <div v-if="singleCard.cast">
+          <p v-for="i in 5">{{ singleCard.cast[i - 1].name }}</p>
+          <p v-for="(typeInfo, i) in singleCard.typeList">
+            {{ `Genere ${i + 1}: ` + typeInfo.name }}
+          </p>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { store } from "../store";
+import { fetchCast, fetchType, store } from "../store";
 import CastInfo from "./CastInfo.vue";
 export default {
   name: "CardFilm",
   props: {
     singleCard: {
       type: Object,
-    },
-    index: {
-      type: Number,
     },
   },
   data() {
@@ -72,15 +67,10 @@ export default {
       }
     },
 
-    getActors() {
-      let toReturn = [];
-      for (let i = 0; i < 5; i++) {
-        toReturn.push(
-          this.store.filmsList[this.index].cast[this.index][i].name
-        );
-        console.log(toReturn);
-      }
-      return toReturn;
+    getInfoFilm() {
+      fetchCast(this.singleCard.id, this.singleCard);
+      fetchType(this.singleCard.id, this.singleCard);
+      this.toggle();
     },
   },
   components: { CastInfo },
